@@ -1,0 +1,6 @@
+[gd_resource type="BlockData" format=1]
+
+[resource]
+
+custom_data = "res://test.json"
+

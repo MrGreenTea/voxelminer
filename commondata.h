@@ -1,10 +1,11 @@
 #ifndef COMMONDATA
 #define COMMONDATA
 
+#include "math/vector3.h"
 //lookup tables, enums etc. needed everwhere
 
 namespace CommonData {
-    const int defaultChunkDimensions = 32;
+    const Vector3 defaultChunkDimensions = Vector3(16, 16, 16);
 
     enum Side{
         TOP,

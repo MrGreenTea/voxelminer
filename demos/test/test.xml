@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resource_file type="PackedScene" subresource_count="2" version="2.1" version_name="Godot Engine v2.1.alpha.custom_build">
+	<resource type="GDScript" path="local://1">
+		<string name="script/source"> "&#000a;extends VoxelMap&#000a;&#000a;# member variables here, example:&#000a;# var a=2&#000a;# var b=&quot;textvar&quot;&#000a;&#000a;func _ready():&#000a;&#0009;# Called every time the node is added to the scene.&#000a;&#0009;# Initialization here&#000a;&#0009;var block_data = BlockData.new()&#000a;&#0009;block_data.set_texture(BlockData.TOP, &quot;hello&quot;)&#000a;&#000a;&#000a;" </string>
+
+	</resource>
+	<main_resource>
+		<dictionary name="_bundled" shared="false">
+			<string> "conn_count" </string>
+			<int> 0 </int>
+			<string> "conns" </string>
+			<int_array  len="0"> 				 </int_array>
+			<string> "editable_instances" </string>
+			<array  len="0" shared="false">
+			</array>
+			<string> "names" </string>
+			<string_array  len="4">
+				<string> "VoxelMap" </string>
+				<string> "_import_transform" </string>
+				<string> "chunk_dimensions" </string>
+				<string> "script/script" </string>
+			</string_array>
+			<string> "node_count" </string>
+			<int> 1 </int>
+			<string> "node_paths" </string>
+			<array  len="0" shared="false">
+			</array>
+			<string> "nodes" </string>
+			<int_array  len="13"> 				-1, -1, 0, 0, -1, 3, 1, 0, 2, 1, 3, 2, 0 </int_array>
+			<string> "variants" </string>
+			<array  len="3" shared="false">
+				<transform> 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 </transform>
+				<int> 16 </int>
+				<resource  resource_type="Script" path="local://1">  </resource>
+			</array>
+			<string> "version" </string>
+			<int> 2 </int>
+		</dictionary>
+
+	</main_resource>
+</resource_file>

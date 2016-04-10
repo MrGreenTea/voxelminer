@@ -11,7 +11,7 @@
 // #define TOOLS_ENABLED 1
 
 void register_voxelmap_types() {
-  // ObjectTypeDB::register_type<Block>();
+  ObjectTypeDB::register_type<Block>();
   ObjectTypeDB::register_type<BlockMaterial>();
   ObjectTypeDB::register_type<BlockData>();
   ObjectTypeDB::register_type<Chunk>();

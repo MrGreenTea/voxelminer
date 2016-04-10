@@ -37,16 +37,15 @@ const int ChunkMeshCreator::quad_list[6][6] = {
 };
 
 Mesh* ChunkMeshCreator::generate_mesh(Chunk* chunk) {
-    ChunkData* data = chunk->get_data();
     Mesh* mesh = memnew(Mesh);
 
-    for (int x = 0; x < data->xDimensions; x++) {
-        for (int y = 0; y < data->yDimensions; y++) {
-            for (int z = 0; z < data->zDimensions; z++) {
+    for (int x = 0; x < chunk->get_dimensions().x; x++) {
+        for (int y = 0; y < chunk->get_dimensions().y; y++) {
+            for (int z = 0; z < chunk->get_dimensions().z; z++) {
                 Vector3 blockPosition = Vector3(x, y, z);
-                Block* currentBlock = data->get_block_at(blockPosition);
-                if (currentBlock->is_opaque()) {
-                    if (data->get_block_at(blockPosition+normal_list[CommonData::RIGHT])->is_opaque()) {
+                Ref<Block> currentBlock = chunk->get_block(blockPosition);
+                if (currentBlock->block_data->is_opaque()) {
+                    if (chunk->get_block(blockPosition+normal_list[CommonData::RIGHT])->block_data->is_opaque()) {
 
                     }
                 }
