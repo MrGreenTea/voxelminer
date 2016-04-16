@@ -18,7 +18,6 @@ class Chunk : public StaticBody
     int chunk_block_array_size;
     int vector_to_index(const Vector3 vector) const;
     MeshInstance* mesh_instance;
-    StaticBody* collider;
 protected:
     static void _bind_methods();
 public:

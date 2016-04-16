@@ -6,14 +6,17 @@
 void Chunk::build_mesh(Ref<BlockLibrary> block_lib) {
     ERR_FAIL_COND(block_lib.is_null());
     Ref<Mesh> new_mesh;
-    ChunkMeshCreator builder = ChunkMeshCreator(block_lib);
-    new_mesh = builder.generate_mesh(this);
+    ChunkMeshCreator builder = ChunkMeshCreator(this, block_lib);
+    new_mesh = builder.generate_mesh();
+    new_mesh->get_faces();
     mesh_instance->set_mesh(new_mesh);
-    if (collider) {
-        collider->queue_delete();
+    Ref<ConcavePolygonShape> collision_shape = builder.generate_collision_shape();
+    if (get_shape_count() == 0) {
+        add_shape(collision_shape);
     }
-    collider = mesh_instance->create_trimesh_collision_node()->cast_to<StaticBody>();
-    add_child(collider);
+    else {
+        set_shape(0, collision_shape);
+    }
 }
 
 void Chunk::set_material(Ref<Material> material) {

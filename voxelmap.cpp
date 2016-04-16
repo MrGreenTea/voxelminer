@@ -121,10 +121,10 @@ Chunk* VoxelMap::create_new_chunk(Vector3 at_pos) {
 }
 
 Ref<Block> VoxelMap::generate_block_at(const Vector3 position) {
-    double height = open_simplex_noise2(ctx, position.x/10, position.z/10);
+    double height = open_simplex_noise2(ctx, position.x/25, position.z/25);
     double mod = open_simplex_noise3(ctx, position.x/10, position.y/10, position.z/10);
 
-    if (height - mod < 0) {
+    if (height * 32 > position.y && mod < 0.3) {
         List<String> blocks = block_library->get_all_block_names();
         int index = (open_simplex_noise3(ctx, position.x, position.y, position.z) + 1) * blocks.size();
         index = index%blocks.size();

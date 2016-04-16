@@ -36,7 +36,7 @@ const int ChunkMeshCreator::quad_list[6][6] = {
     {4,5,6,4,6,7}  //front
 };
 
-Ref<Mesh> ChunkMeshCreator::generate_mesh(Chunk* chunk) {
+Ref<Mesh> ChunkMeshCreator::generate_mesh() {
     Ref<Mesh> mesh = memnew(Mesh);
 
     for (int x = 0; x < chunk->get_dimensions().x; x++) {
@@ -50,7 +50,7 @@ Ref<Mesh> ChunkMeshCreator::generate_mesh(Chunk* chunk) {
                 Ref<BlockData> current_block_data = current_block->block_data;
                 if (current_block_data->is_opaque()) {
                     for (int side = BlockData::TOP; side <= BlockData::BACK; side++) {
-                        Ref<Block> neighbour_block = safe_get_block(chunk, block_position + normal_list[side]);
+                        Ref<Block> neighbour_block = safe_get_block(block_position + normal_list[side]);
                         CommonData::Side side_to_add = static_cast<CommonData::Side>(side);
                         if ( (neighbour_block == NULL || !neighbour_block->get_block_data()->is_opaque())) {
                             add_quad(block_position, current_block, side_to_add);
@@ -77,7 +77,13 @@ Ref<Mesh> ChunkMeshCreator::generate_mesh(Chunk* chunk) {
     return mesh;
 }
 
-Ref<Block> ChunkMeshCreator::safe_get_block(Chunk *chunk, Vector3 position) {
+Ref<ConcavePolygonShape> ChunkMeshCreator::generate_collision_shape() {
+    Ref<ConcavePolygonShape> new_shape = memnew(ConcavePolygonShape);
+    new_shape->set_faces(vertices);
+    return new_shape;
+}
+
+Ref<Block> ChunkMeshCreator::safe_get_block(Vector3 position) {
     CommonData::Side side = CommonData::NONE;
     if (position.x < 0) {
         position.set_axis(Vector3::AXIS_X, chunk->get_dimensions().x - 1);
@@ -125,8 +131,9 @@ void ChunkMeshCreator::add_quad(Vector3 position, Ref<Block> block, CommonData::
     uvs.append_array(block_library->get_uvs(block->get_name(), side));
 }
 
-ChunkMeshCreator::ChunkMeshCreator(Ref<BlockLibrary> block_lib, bool gen_collider)
+ChunkMeshCreator::ChunkMeshCreator(Chunk* chunk, Ref<BlockLibrary> block_lib, bool gen_collider)
 {
+    this->chunk = chunk;
     generate_collider = gen_collider;
     block_library = block_lib;
 }
