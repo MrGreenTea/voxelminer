@@ -1,0 +1,11 @@
+[gd_resource type="BlockLibrary" load_steps=3 format=1]
+
+[ext_resource path="res://blocks/dirt.tres" type="BlockData" id=1]
+[ext_resource path="res://blocks/stone.tres" type="BlockData" id=2]
+[ext_resource path="res://blocks/wood.tres" type="BlockData" id=3]
+
+[resource]
+
+dirt = ExtResource( 1 )
+stone = ExtResource( 2 )
+wood = ExtResource( 3 )

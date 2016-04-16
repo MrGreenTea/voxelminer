@@ -1,0 +1,107 @@
+[gd_scene load_steps=4 format=1]
+
+[sub_resource type="SphereShape" id=1]
+
+radius = 0.3
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "\nextends KinematicBody\n\n# member variables here, example:\n# var a=2\n# var b=\"textvar\"\n\nvar ray_node\n\nexport var view_sensitivity = 1.0\nexport var move_speed = 10\nexport var boost_modifier = 10\n\nfunc _ready():\n\t# Called every time the node is added to the scene.\n\t# Initialization here\n\tset_fixed_process(true)\n\tset_process_input(true)\n\tray_node = get_node(\"RayCast\")\n\tset_process(true)\n\t\n\n\nfunc _input(event):\n\tif event.type == InputEvent.MOUSE_MOTION:\n\t\trotate_x(event.relative_y * view_sensitivity * 0.05)\n\t\trotate_y(event.relative_x * view_sensitivity * 0.05)\n\nfunc _fixed_process(delta):\n\tvar transform = get_transform()\n\tvar move_vector = Vector3()\n\tif Input.is_action_pressed(\"move_up\"):\n\t\tmove_vector += Vector3(0, 0, -1)\n\tif Input.is_action_pressed(\"move_down\"):\n\t\tmove_vector += Vector3(0, 0, 1)\n\tif Input.is_action_pressed(\"move_left\"):\n\t\tmove_vector += Vector3(-1, 0, 0)\n\tif Input.is_action_pressed(\"move_right\"):\n\t\tmove_vector += Vector3(1, 0, 0)\n\tif Input.is_action_pressed(\"move_jump\"):\n\t\tmove_vector += Vector3(0, 1, 0)\n\tif Input.is_action_pressed(\"move_rotate_left\"):\n\t\trotate_z(0.03)\n\tif Input.is_action_pressed(\"move_rotate_right\"):\n\t\trotate_z(-0.03)\n\t\n\tif Input.is_action_pressed(\"ui_menu\"):\n\t\tInput.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)\n\tif Input.is_action_pressed(\"fire\"):\n\t\tInput.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)\n\t\tif ray_node.is_colliding():\n\t\t\tvar block_pos = ray_node.get_collision_point().floor()\n\t\t\tprint(block_pos)\n\t\t\tvar voxel_map = ray_node.get_collider().get_parent().get_parent()\n\t\t\tprint(voxel_map)\n\t\t\tvoxel_map.remove_block(block_pos)\n\t\t\t\n\t\n\tmove_vector = transform.translated(move_vector).origin - transform.origin\n\tmove_vector = move_vector.normalized() * move_speed * delta\n\tif Input.is_action_pressed(\"shift_modifier\"):\n\t\tmove_vector *= boost_modifier\n\tmove(move_vector)"
+
+[sub_resource type="Environment" id=3]
+
+ambient_light/enabled = true
+ambient_light/color = Color( 0.27451, 0.27451, 0.313726, 1 )
+ambient_light/energy = 1.0
+fxaa/enabled = false
+background/mode = 1
+background/color = Color( 0, 0, 0, 1 )
+background/energy = 1.0
+background/scale = 1.0
+background/glow = 0.0
+background/canvas_max_layer = null
+glow/enabled = true
+glow/blur_passes = 1
+glow/blur_scale = 1
+glow/blur_strength = 1
+glow/blur_blend_mode = null
+glow/bloom = 0.0
+glow/bloom_treshold = 0.5
+dof_blur/enabled = false
+dof_blur/blur_passes = 1
+dof_blur/begin = 100.0
+dof_blur/range = 10.0
+hdr/enabled = false
+hdr/tonemapper = 0
+hdr/exposure = 0.4
+hdr/white = 1.0
+hdr/glow_treshold = 0.95
+hdr/glow_scale = 0.2
+hdr/min_luminance = 0.4
+hdr/max_luminance = 8.0
+hdr/exposure_adj_speed = 0.5
+fog/enabled = false
+fog/begin = 100.0
+fog/begin_color = Color( 0, 0, 0, 1 )
+fog/end_color = Color( 0, 0, 0, 1 )
+fog/attenuation = 1.0
+fog/bg = true
+bcs/enabled = false
+bcs/brightness = 1.0
+bcs/contrast = 1.0
+bcs/saturation = 1.0
+srgb/enabled = false
+
+[node name="KinematicBody" type="KinematicBody"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( -0.517701, 0, -0.855562, 0, 1, 0, 0.855562, 0, -0.517701, 0, 0, 0 )
+input/ray_pickable = true
+input/capture_on_drag = false
+shape_count = 1
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collide_with/static = true
+collide_with/kinematic = true
+collide_with/rigid = true
+collide_with/character = true
+collision/margin = 0.001
+script/script = SubResource( 2 )
+view_sensitivity = 1.0
+move_speed = 10
+boost_modifier = 10
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Camera" type="Camera" parent="."]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+projection = 0
+fov = 60.0
+near = 0.1
+far = 100.0
+keep_aspect = 1
+current = true
+visible_layers = 1048575
+environment = SubResource( 3 )
+h_offset = 0.0
+v_offset = 0.0
+
+[node name="RayCast" type="RayCast" parent="."]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, 0, -5 )
+layer_mask = 1
+type_mask = 13
+
+
