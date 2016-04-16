@@ -4,7 +4,7 @@
 
 [sub_resource type="GDScript" id=1]
 
-script/source = "\nextends VoxelMap\n\n\nexport var dict = Dictionary()\n# member variables here, example:\n# var a=2\n# var b=\"textvar\"\n\nexport var size = 5\n\nfunc _ready():\n\t# Called every time the node is added to the scene.\n\t# Initialization here\n\tfor x in range(size):\n\t\tfor z in range(size):\n\t\t\tfor y in range(size):\n\t\t\t\tcreate_new_chunk(Vector3(x,y,z))\n\t\n\t# Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)"
+script/source = "\nextends VoxelMap\n\n\nexport var dict = Dictionary()\n# member variables here, example:\n# var a=2\n# var b=\"textvar\"\n\nexport var size = 5\nexport var height = 3\n\nfunc _ready():\n\t# Called every time the node is added to the scene.\n\t# Initialization here\n\tvar normalized_height = -(height - 3)\n\tfor x in range(size):\n\t\tfor z in range(size):\n\t\t\tfor y in range(normalized_height, 3):\n\t\t\t\tcreate_new_chunk(Vector3(x,y,z))\n\t\n\t# Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)"
 
 [node name="VoxelMap" type="VoxelMap"]
 
@@ -15,5 +15,6 @@ update_automatically = true
 script/script = SubResource( 1 )
 dict = {  }
 size = 2
+height = 6
 
 

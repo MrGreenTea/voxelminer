@@ -9,6 +9,9 @@ _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="VoxelMap" parent="." instance=ExtResource( 1 )]
 
+size = 4
+height = 8
+
 [node name="KinematicBody" parent="." instance=ExtResource( 2 )]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]

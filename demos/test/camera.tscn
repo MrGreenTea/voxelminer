@@ -6,21 +6,21 @@ radius = 0.3
 
 [sub_resource type="GDScript" id=2]
 
-script/source = "\nextends KinematicBody\n\n# member variables here, example:\n# var a=2\n# var b=\"textvar\"\n\nvar ray_node\n\nexport var view_sensitivity = 1.0\nexport var move_speed = 10\nexport var boost_modifier = 10\n\nfunc _ready():\n\t# Called every time the node is added to the scene.\n\t# Initialization here\n\tset_fixed_process(true)\n\tset_process_input(true)\n\tray_node = get_node(\"RayCast\")\n\tset_process(true)\n\t\n\n\nfunc _input(event):\n\tif event.type == InputEvent.MOUSE_MOTION:\n\t\trotate_x(event.relative_y * view_sensitivity * 0.05)\n\t\trotate_y(event.relative_x * view_sensitivity * 0.05)\n\nfunc _fixed_process(delta):\n\tvar transform = get_transform()\n\tvar move_vector = Vector3()\n\tif Input.is_action_pressed(\"move_up\"):\n\t\tmove_vector += Vector3(0, 0, -1)\n\tif Input.is_action_pressed(\"move_down\"):\n\t\tmove_vector += Vector3(0, 0, 1)\n\tif Input.is_action_pressed(\"move_left\"):\n\t\tmove_vector += Vector3(-1, 0, 0)\n\tif Input.is_action_pressed(\"move_right\"):\n\t\tmove_vector += Vector3(1, 0, 0)\n\tif Input.is_action_pressed(\"move_jump\"):\n\t\tmove_vector += Vector3(0, 1, 0)\n\tif Input.is_action_pressed(\"move_rotate_left\"):\n\t\trotate_z(0.03)\n\tif Input.is_action_pressed(\"move_rotate_right\"):\n\t\trotate_z(-0.03)\n\t\n\tif Input.is_action_pressed(\"ui_menu\"):\n\t\tInput.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)\n\tif Input.is_action_pressed(\"fire\"):\n\t\tInput.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)\n\t\tif ray_node.is_colliding():\n\t\t\tvar block_pos = ray_node.get_collision_point().floor()\n\t\t\tprint(block_pos)\n\t\t\tvar voxel_map = ray_node.get_collider().get_parent().get_parent()\n\t\t\tprint(voxel_map)\n\t\t\tvoxel_map.remove_block(block_pos)\n\t\t\t\n\t\n\tmove_vector = transform.translated(move_vector).origin - transform.origin\n\tmove_vector = move_vector.normalized() * move_speed * delta\n\tif Input.is_action_pressed(\"shift_modifier\"):\n\t\tmove_vector *= boost_modifier\n\tmove(move_vector)"
+script/source = "\nextends KinematicBody\n\n# member variables here, example:\n# var a=2\n# var b=\"textvar\"\n\nvar ray_node\n\nexport var view_sensitivity = 1.0\nexport var move_speed = 10\nexport var boost_modifier = 10\n\nfunc _ready():\n\t# Called every time the node is added to the scene.\n\t# Initialization here\n\tset_fixed_process(true)\n\tset_process_input(true)\n\tray_node = get_node(\"RayCast\")\n\tset_process(true)\n\t\n\n\nfunc _input(event):\n\tif event.type == InputEvent.MOUSE_MOTION:\n\t\trotate_x(event.relative_y * view_sensitivity * 0.05)\n\t\trotate_y(event.relative_x * view_sensitivity * 0.05)\n\nfunc _fixed_process(delta):\n\tvar transform = get_transform()\n\tvar move_vector = Vector3()\n\tif Input.is_action_pressed(\"move_up\"):\n\t\tmove_vector += Vector3(0, 0, -1)\n\tif Input.is_action_pressed(\"move_down\"):\n\t\tmove_vector += Vector3(0, 0, 1)\n\tif Input.is_action_pressed(\"move_left\"):\n\t\tmove_vector += Vector3(-1, 0, 0)\n\tif Input.is_action_pressed(\"move_right\"):\n\t\tmove_vector += Vector3(1, 0, 0)\n\tif Input.is_action_pressed(\"move_jump\"):\n\t\tmove_vector += Vector3(0, 1, 0)\n\tif Input.is_action_pressed(\"move_crouch\"):\n\t\tmove_vector += Vector3(0, -1, 0)\n\tif Input.is_action_pressed(\"move_rotate_left\"):\n\t\trotate_z(0.03)\n\tif Input.is_action_pressed(\"move_rotate_right\"):\n\t\trotate_z(-0.03)\n\t\n\tif Input.is_action_pressed(\"ui_menu\"):\n\t\tInput.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)\n\tif Input.is_action_pressed(\"fire\"):\n\t\tInput.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)\n\t\tif ray_node.is_colliding():\n\t\t\tvar block_pos = ray_node.get_collision_point().floor()\n\t\t\tprint(block_pos)\n\t\t\tvar voxel_map = ray_node.get_collider().get_parent()\n\t\t\tprint(voxel_map)\n\t\t\tvoxel_map.remove_block(block_pos)\n\t\t\t\n\t\n\tmove_vector = transform.translated(move_vector).origin - transform.origin\n\tmove_vector = move_vector.normalized() * move_speed * delta\n\tif Input.is_action_pressed(\"shift_modifier\"):\n\t\tmove_vector *= boost_modifier\n\tmove(move_vector)"
 
 [sub_resource type="Environment" id=3]
 
 ambient_light/enabled = true
-ambient_light/color = Color( 0.27451, 0.27451, 0.313726, 1 )
+ambient_light/color = Color( 0.2, 0.196078, 0.227451, 1 )
 ambient_light/energy = 1.0
 fxaa/enabled = false
-background/mode = 1
-background/color = Color( 0, 0, 0, 1 )
+background/mode = 2
+background/color = Color( 0.2, 0.196078, 0.227451, 1 )
 background/energy = 1.0
 background/scale = 1.0
 background/glow = 0.0
 background/canvas_max_layer = null
-glow/enabled = true
+glow/enabled = false
 glow/blur_passes = 1
 glow/blur_scale = 1
 glow/blur_strength = 1
@@ -40,12 +40,12 @@ hdr/glow_scale = 0.2
 hdr/min_luminance = 0.4
 hdr/max_luminance = 8.0
 hdr/exposure_adj_speed = 0.5
-fog/enabled = false
-fog/begin = 100.0
-fog/begin_color = Color( 0, 0, 0, 1 )
-fog/end_color = Color( 0, 0, 0, 1 )
-fog/attenuation = 1.0
-fog/bg = true
+fog/enabled = true
+fog/begin = 50.0
+fog/begin_color = Color( 1, 1, 1, 1 )
+fog/end_color = Color( 0.200535, 0.196259, 0.230469, 1 )
+fog/attenuation = 2.0
+fog/bg = false
 bcs/enabled = false
 bcs/brightness = 1.0
 bcs/contrast = 1.0
@@ -85,9 +85,9 @@ _update_shape_index = 0
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 projection = 0
-fov = 60.0
+fov = 90.0
 near = 0.1
-far = 100.0
+far = 200.0
 keep_aspect = 1
 current = true
 visible_layers = 1048575
