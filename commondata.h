@@ -13,7 +13,18 @@ namespace CommonData {
         RIGHT,
         LEFT,
         FRONT,
-        BACK
+        BACK,
+        NONE
+    };
+
+    const Side opposite_sides[7] = {
+        BOTTOM,
+        TOP,
+        LEFT,
+        RIGHT,
+        BACK,
+        FRONT,
+        NONE
     };
 }
 

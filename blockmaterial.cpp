@@ -1,4 +1,4 @@
-#include "block_material.h"
+#include "blockmaterial.h"
 
 BlockMaterial::BlockMaterial()
 {

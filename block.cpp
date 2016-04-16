@@ -1,5 +1,9 @@
 #include "block.h"
 
+String Block::get_name() {
+    return block_data->get_name();
+}
+
 void Block::set_block_data(Ref<BlockData> data) {
     block_data = data;
 }

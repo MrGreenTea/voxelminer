@@ -1,8 +1,9 @@
 #ifndef CHUNKMESHCREATOR_H
 #define CHUNKMESHCREATOR_H
 
-#include "chunk.h"
 #include "scene/resources/mesh.h"
+#include "blocklibrary.h"
+#include "chunk.h"
 
 struct bitset {
     char data;
@@ -45,20 +46,22 @@ struct bitset {
 
 class ChunkMeshCreator
 {
-    const static Vector3 normal_list[6];
     const static Vector3 vertex_list[8];
     const static Vector2 uv_list[4];
     const static int     quad_list[6][6];
 
 private:
-    bool generateCollider;
+    Ref<BlockLibrary> block_library;
+    bool generate_collider;
     DVector<Vector3> vertices;
     DVector<Vector3> normals;
     DVector<Vector2> uvs;
-    void add_quad(CommonData::Side side);
+    void add_quad(Vector3 position, Ref<Block> block, CommonData::Side side);
+    Ref<Block> safe_get_block(Chunk* chunk, Vector3 position);
 public:
-    ChunkMeshCreator(bool generateCollider = true);
-    Mesh* generate_mesh(Chunk* chunk);
+    const static Vector3 normal_list[6];
+    ChunkMeshCreator(Ref<BlockLibrary> block_library, bool generate_collider = true);
+    Ref<Mesh> generate_mesh(Chunk* chunk);
 };
 
 #endif // CHUNKMESHCREATOR_H

@@ -2,21 +2,21 @@
 #include "core/bind/core_bind.h"
 
 
-Ref<Texture> BlockData::get_default_texture() {
+Ref<ImageTexture> BlockData::get_default_texture() {
     return default_texture;
 }
 
-void BlockData::set_default_texture(Ref<Texture> texture) {
+void BlockData::set_default_texture(Ref<ImageTexture> texture) {
     default_texture = texture;
 }
 
-Ref<Texture> BlockData::_get_side_texture_in_editor(Sides side) {
+Ref<ImageTexture> BlockData::_get_side_texture_in_editor(Sides side) {
     // in-editor only getter for side texture properties
     ERR_FAIL_INDEX_V(side, 6, NULL);
     return textures[side];
 }
 
-Ref<Texture> BlockData::get_texture(Sides side) {
+Ref<ImageTexture> BlockData::get_texture(Sides side) {
     ERR_FAIL_INDEX_V(side, 6, NULL);
     if (textures[side] != NULL) {
         return textures[side];
@@ -26,7 +26,7 @@ Ref<Texture> BlockData::get_texture(Sides side) {
     }
 }
 
-void BlockData::set_texture(Sides side, Ref<Texture> texture) {
+void BlockData::set_texture(Sides side, Ref<ImageTexture> texture) {
     ERR_FAIL_INDEX(side, 6)
     textures[side] = texture;
 }
@@ -142,7 +142,7 @@ void BlockData::_bind_methods(){
 
 }
 
-BlockData::BlockData()
+BlockData::BlockData() : textures()
 {
     solid = true;
     opaque = true;

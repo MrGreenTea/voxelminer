@@ -15,6 +15,7 @@ public:
     Ref<BlockData> block_data;
     Ref<BlockData> get_block_data();
     void set_block_data(Ref<BlockData> data);
+    String get_name();
     void set_custom_data(String key, Variant value);
     void set_custom_data_dict(Dictionary dict);
     Dictionary get_custom_data_dict();
